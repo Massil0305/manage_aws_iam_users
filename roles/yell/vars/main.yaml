@@ -1,0 +1,10 @@
+admins:
+  - aws_developer
+  - franz_Schubert
+readonly:
+  - ludwig_van_Beethoven
+  - frederic_Chopin
+  - claude_Debussy
+obsolete:
+  - theo_Mozart
+  - antonio_Vivaldi

@@ -1,0 +1,55 @@
+- name: Create Two Groups, Admins (Full Access) and Viewers (Read Only)
+  iam:
+    iam_type: group
+    name: "{{ item }}"
+    state: present
+  loop:
+     - Admins
+     - Viewers 
+  register: new_groups
+
+- name: Assign a policy called Admin to the administrators group
+  iam_policy:
+    iam_type: group
+    iam_name: Admins
+    policy_name: Admin_Policy
+    state: present
+    policy_document: admin_policy.json
+
+- name: Apply READ-ONLY policy to Viewers group
+  iam_policy:
+    iam_type: group
+    iam_name: Viewers
+    policy_name: "READ-ONLY"
+    policy_document: readonlypolicy.json
+    state: present
+
+- name: Create AWS admin Users
+  iam:
+    iam_type: user
+    name: "{{ item }}"
+    state: present
+    password: Ch@ngeme0
+    groups: Admins
+    update_password: on_create
+    access_key_state: create 
+  with_items: '{{ admins }}'
+
+- name: Create AWS readonly Users
+  iam:
+    iam_type: user
+    name: "{{ item }}"
+    state: present
+    password: Ch@ngeme0
+    groups: Viewers
+    update_password: on_create
+    access_key_state: create
+  with_items: '{{ readonly }}'
+
+- name: Delete obsolete users
+  iam:
+    iam_type: user
+    name: "{{ item }}"
+    state: absent
+  with_items: '{{ obsolete }}'
+
