@@ -3,4 +3,4 @@
   connection: local
   gather_facts: True
   roles:
-  - roles/yell
+  - roles/role
