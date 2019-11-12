@@ -1,6 +1,13 @@
 # manage_aws_iam_users
 # This Repository helps to add 2 groups and users, also deletes obsolete users
 
+## REQUIREMENTS:
+
+- `ansible`
+- `boto`
+- `boto3`
+- `aws cli configured`
+
 ## USAGE:
 
 1- Clone Repository:
